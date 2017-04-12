@@ -10,66 +10,67 @@
 
     <TextView
         android:id="@+id/shuju"
-        android:layout_width="249dp"
-        android:layout_height="34dp"
+        android:layout_width="204dp"
+        android:layout_height="50dp"
         android:text="欢迎使用！"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="48dp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginEnd="180dp" />
 
     <Button
         android:text="Stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
         android:id="@+id/stop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="138dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginLeft="116dp"
+        android:layout_marginBottom="-11dp"
+        android:layout_marginStart="84dp" />
 
     <Button
         android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
         android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp" />
 
     <Button
         android:text="Show"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
         android:id="@+id/show"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="248dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginLeft="148dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="164dp" />
 
-
-        <TextView
-            android:id="@+id/save"
-            android:layout_width="264dp"
-            android:layout_height="412dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="83dp"
-            android:text="测得数据"
-            android:maxLines="20"
-            android:scrollbars="vertical"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="104dp"
+        android:layout_height="48dp"
         android:text="Baidu Map"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="-12dp"
-        android:layout_marginBottom="83dp" />
+        android:layout_marginLeft="282dp"
+        android:layout_marginStart="243dp"
+        android:layout_marginBottom="0dp" />
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="386dp"
+        android:layout_height="327dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="-1dp"
+        android:layout_marginBottom="102dp" />
 
 
 </android.support.constraint.ConstraintLayout>
