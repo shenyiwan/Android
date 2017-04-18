@@ -2,6 +2,7 @@ package com.example.administrator.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -13,13 +14,15 @@ import android.widget.Toast;
 import org.apache.http.util.EncodingUtils;
 
 import java.io.FileInputStream;
+import java.io.File;
 
 
 
 public class DataActivity extends AppCompatActivity implements
         View.OnClickListener{
-    TextView data;
+    private TextView data;
     private Button back,show;
+    private File file=null;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +35,11 @@ public class DataActivity extends AppCompatActivity implements
         show.setOnClickListener(this);
     }
 
-    public String readFileData(String fileName){
+    public String readFileData(String filename){
         String result="";
         try {
-            FileInputStream fin = openFileInput(fileName);
+            file=new File(Environment.getExternalStorageDirectory().toString()+File.separator+filename);
+            FileInputStream fin = new FileInputStream(file);
             int length = fin.available();
             byte[] buffer = new byte[length];
             fin.read(buffer);

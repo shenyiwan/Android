@@ -10,6 +10,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,21 +30,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-
-
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.Legend;
-import com.github.mikephil.charting.utils.Legend.LegendForm;
-import com.github.mikephil.charting.utils.XLabels;
-import com.github.mikephil.charting.utils.XLabels.XLabelPosition;
-import com.github.mikephil.charting.utils.YLabels;
-
-
 import org.apache.http.util.EncodingUtils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,12 +58,15 @@ public class MainActivity extends AppCompatActivity implements
         SensorEventListener,View.OnClickListener {
     private SensorManager sensorManager;
     private boolean flag = true;
-    private Button start, stop, show, map;
-    TextView etTxt1;
     private float xValue, yValue, zValue;
     private int j=0;
+    private int savedTime;
+    private long Time;
+    private String str1;
 
-
+    private Button start, stop, show, map;
+    private TextView etTxt1;
+    private File file=null;
     private LineChartView lineChart1;
     private LineChartView lineChart2;
     private LineChartView lineChart3;
@@ -84,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements
     private List<PointValue> zPointValues = new ArrayList<PointValue>();
     private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
 
-    String[] date =new String[100];
-    int[] score=new  int[100];
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,13 +87,9 @@ public class MainActivity extends AppCompatActivity implements
         sensorManager = (SensorManager) getSystemService(
                 Context.SENSOR_SERVICE);
 
-//        long Time= System.currentTimeMillis();
-//        int savedTime=(int)Time;
-
         lineChart1=(LineChartView) findViewById(R.id.chart1);
         lineChart2=(LineChartView) findViewById(R.id.chart2);
         lineChart3=(LineChartView) findViewById(R.id.chart3);
-
 
         Button start = (Button) findViewById(R.id.start);
         start.setOnClickListener(this);
@@ -113,8 +99,9 @@ public class MainActivity extends AppCompatActivity implements
         show.setOnClickListener(this);
         Button map = (Button) findViewById(R.id.map);
         map.setOnClickListener(this);
-    }
 
+
+    }
 
     private void initLineChart(LineChartView lineChart,List<PointValue> pointValues,int color){
           Line line=new Line(pointValues).setColor(color).setStrokeWidth(2);
@@ -181,7 +168,8 @@ public class MainActivity extends AppCompatActivity implements
 
     public void writeFileData(String filename, String message) {
         try {
-            FileOutputStream fout = openFileOutput(filename, MODE_APPEND);
+            file=new File(Environment.getExternalStorageDirectory().toString()+File.separator+filename);
+            FileOutputStream fout = new FileOutputStream(file,true);
             byte[] bytes = message.getBytes();
             fout.write(bytes);
             fout.close();
@@ -223,26 +211,28 @@ public class MainActivity extends AppCompatActivity implements
         DecimalFormat df = new DecimalFormat("#,##0.000");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
         String str = sdf.format(new Date());
-        message = str + "\n";
+        message = str + " \n";
         message += df.format(xValue) + " ";
         message += df.format(yValue) + " ";
         message += df.format(zValue) + " ";
-        etTxt1.setText(message + "\n");
+        message +="\n";
+        etTxt1.setText(message);
         if (flag) {
             writeFileData("acc.txt", message);
 
-            mAxisXValues.add(new AxisValue(j).setLabel(String.valueOf(j)));
-            xPointValues.add(new PointValue(j,xValue));
-            initLineChart(lineChart1,xPointValues,Color.rgb(137, 230, 81));
-            mAxisXValues.add(new AxisValue(j).setLabel(String.valueOf(j)));
-            yPointValues.add(new PointValue(j,yValue));
-            initLineChart(lineChart2,yPointValues,Color.rgb(240, 240, 30));
-            mAxisXValues.add(new AxisValue(j).setLabel(String.valueOf(j)));
-            zPointValues.add(new PointValue(j,zValue));
-            initLineChart(lineChart3,zPointValues,Color.rgb(89, 199, 250));
-            j++;
+//            SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
+//            str1 = sdf1.format(new Date());
+//            mAxisXValues.add(new AxisValue(j).setLabel(str1));
+//            xPointValues.add(new PointValue(j,xValue));
+//            initLineChart(lineChart1,xPointValues,Color.rgb(137, 230, 81));
+//            mAxisXValues.add(new AxisValue(j).setLabel(str1));
+//            yPointValues.add(new PointValue(j,yValue));
+//            initLineChart(lineChart2,yPointValues,Color.rgb(240, 240, 30));
+//            mAxisXValues.add(new AxisValue(j).setLabel(str1));
+//            zPointValues.add(new PointValue(j,zValue));
+//            initLineChart(lineChart3,zPointValues,Color.rgb(89, 199, 250));
+//            j++;
         }
-
     }
 
     @Override
