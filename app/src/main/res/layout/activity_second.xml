@@ -32,7 +32,7 @@
         android:text="Start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="96dp"
+        android:layout_marginLeft="88dp"
         android:layout_marginBottom="0dp" />
 
     <Button
@@ -42,9 +42,18 @@
         android:text="Stop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="208dp"
-        android:layout_marginBottom="-12dp" />
+        android:layout_marginLeft="176dp"
+        android:layout_marginBottom="0dp" />
 
+    <Button
+        android:id="@+id/route"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Route"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="264dp"
+        android:layout_marginBottom="0dp" />
 
 
 </android.support.constraint.ConstraintLayout>

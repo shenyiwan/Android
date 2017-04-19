@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements
     private long Time;
     private String str1;
 
-    private Button start, stop, show, map;
+    private Button start,stop,show,map;
     private TextView etTxt1;
     private File file=null;
     private LineChartView lineChart1;
@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements
         show.setOnClickListener(this);
         Button map = (Button) findViewById(R.id.map);
         map.setOnClickListener(this);
-
 
     }
 
@@ -220,18 +219,18 @@ public class MainActivity extends AppCompatActivity implements
         if (flag) {
             writeFileData("acc.txt", message);
 
-//            SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
-//            str1 = sdf1.format(new Date());
-//            mAxisXValues.add(new AxisValue(j).setLabel(str1));
-//            xPointValues.add(new PointValue(j,xValue));
-//            initLineChart(lineChart1,xPointValues,Color.rgb(137, 230, 81));
-//            mAxisXValues.add(new AxisValue(j).setLabel(str1));
-//            yPointValues.add(new PointValue(j,yValue));
-//            initLineChart(lineChart2,yPointValues,Color.rgb(240, 240, 30));
-//            mAxisXValues.add(new AxisValue(j).setLabel(str1));
-//            zPointValues.add(new PointValue(j,zValue));
-//            initLineChart(lineChart3,zPointValues,Color.rgb(89, 199, 250));
-//            j++;
+            SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
+            str1 = sdf1.format(new Date());
+            mAxisXValues.add(new AxisValue(j).setLabel(str1));
+            xPointValues.add(new PointValue(j,xValue));
+            initLineChart(lineChart1,xPointValues,Color.rgb(137, 230, 81));
+            mAxisXValues.add(new AxisValue(j).setLabel(str1));
+            yPointValues.add(new PointValue(j,yValue));
+            initLineChart(lineChart2,yPointValues,Color.rgb(240, 240, 30));
+            mAxisXValues.add(new AxisValue(j).setLabel(str1));
+            zPointValues.add(new PointValue(j,zValue));
+            initLineChart(lineChart3,zPointValues,Color.rgb(89, 199, 250));
+            j++;
         }
     }
 

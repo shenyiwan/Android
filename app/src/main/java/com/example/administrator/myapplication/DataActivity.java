@@ -11,17 +11,19 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.platform.comapi.map.B;
+
 import org.apache.http.util.EncodingUtils;
 
 import java.io.FileInputStream;
 import java.io.File;
-
+import java.io.FileOutputStream;
 
 
 public class DataActivity extends AppCompatActivity implements
         View.OnClickListener{
     private TextView data;
-    private Button back,show;
+    private Button back,show,clear;
     private File file=null;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class DataActivity extends AppCompatActivity implements
         back.setOnClickListener(this);
         Button show=(Button) findViewById(R.id.show);
         show.setOnClickListener(this);
+        Button clear=(Button) findViewById(R.id.clear);
+        clear.setOnClickListener(this);
     }
 
     public String readFileData(String filename){
@@ -50,6 +54,18 @@ public class DataActivity extends AppCompatActivity implements
         return result;
     }
 
+    public void writeFileData(String filename, String message) {
+        try {
+            file=new File(Environment.getExternalStorageDirectory().toString()+File.separator+filename);
+            FileOutputStream fout = new FileOutputStream(file,false);
+            byte[] bytes = message.getBytes();
+            fout.write(bytes);
+            fout.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void onClick(View view){
         if(view.getId()==R.id.back)
         {
@@ -58,6 +74,12 @@ public class DataActivity extends AppCompatActivity implements
             startActivity(intent);
         }
         if(view.getId()==R.id.show){
+            String res=readFileData("acc.txt");
+            data.setText(res);
+        }
+        if(view.getId()==R.id.clear)
+        {
+            writeFileData("acc.txt","");
             String res=readFileData("acc.txt");
             data.setText(res);
         }

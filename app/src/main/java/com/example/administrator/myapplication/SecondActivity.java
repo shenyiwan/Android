@@ -49,7 +49,7 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
 
     private MyLocationListener myListenner = new MyLocationListener();
 
-    private Button back,start,stop;
+    private Button back,start,stop,route;
     private  String currentAddr;
     private  double longitude;
     private  double latitude;
@@ -154,6 +154,8 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         start.setOnClickListener(this);
         Button stop=(Button)findViewById(R.id.stop);
         stop.setOnClickListener(this);
+        Button route=(Button)findViewById(R.id.route);
+        route.setOnClickListener(this);
 
     }
 
@@ -180,7 +182,6 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         option.setCoorType("bd09ll");
         option.setScanSpan(1000);
         option.setIsNeedAddress(true);
-//        option.setNeedDeviceDirect(true);
         locationClient.setLocOption(option);
     }
 
@@ -289,6 +290,11 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
                 drawEnd(points);
                 locationClient.stop();
             }
+        }
+
+        if(view.getId()==R.id.route){
+            Intent intent = new Intent(SecondActivity.this, RoutePlanDemo.class);
+            startActivity(intent);
         }
     }
 }
