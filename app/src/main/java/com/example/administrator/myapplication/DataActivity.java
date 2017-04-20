@@ -70,7 +70,7 @@ public class DataActivity extends AppCompatActivity implements
         if(view.getId()==R.id.back)
         {
             Toast.makeText(DataActivity.this, "return", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(DataActivity.this, MainActivity.class);
+            Intent intent = new Intent(DataActivity.this, SensorActivity.class);
             startActivity(intent);
         }
         if(view.getId()==R.id.show){

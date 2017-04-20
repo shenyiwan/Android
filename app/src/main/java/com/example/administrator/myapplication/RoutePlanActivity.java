@@ -3,8 +3,6 @@ package com.example.administrator.myapplication;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,7 +54,7 @@ import com.example.administrator.overlayutil.WalkingRouteOverlay;
  * 此demo用来展示如何进行驾车、步行、公交路线搜索并在地图使用RouteOverlay、TransitOverlay绘制
  * 同时展示如何进行节点浏览并弹出泡泡
  */
-public class RoutePlanDemo extends Activity
+public class RoutePlanActivity extends Activity
         implements BaiduMap.OnMapClickListener, OnGetRoutePlanResultListener {
     EditText editSt;
     EditText editEn;
@@ -224,7 +222,7 @@ public class RoutePlanDemo extends Activity
         // 移动节点至中心
         mBaidumap.setMapStatus(MapStatusUpdateFactory.newLatLng(nodeLocation));
         // show popup
-        popupText = new TextView(RoutePlanDemo.this);
+        popupText = new TextView(RoutePlanActivity.this);
         popupText.setBackgroundResource(R.drawable.popup);
         popupText.setTextColor(0xFF000000);
         popupText.setText(nodeTitle);
@@ -267,7 +265,7 @@ public class RoutePlanDemo extends Activity
     @Override
     public void onGetWalkingRouteResult(WalkingRouteResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RoutePlanActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             // 起终点或途经点地址有岐义，通过以下接口获取建议查询信息
@@ -293,7 +291,7 @@ public class RoutePlanDemo extends Activity
     public void onGetTransitRouteResult(TransitRouteResult result) {
 
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RoutePlanActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             // 起终点或途经点地址有岐义，通过以下接口获取建议查询信息
@@ -321,7 +319,7 @@ public class RoutePlanDemo extends Activity
     @Override
     public void onGetDrivingRouteResult(DrivingRouteResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RoutePlanActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             // 起终点或途经点地址有岐义，通过以下接口获取建议查询信息
@@ -349,7 +347,7 @@ public class RoutePlanDemo extends Activity
     @Override
     public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
         if (bikingRouteResult == null || bikingRouteResult.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(RoutePlanDemo.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RoutePlanActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
         }
         if (bikingRouteResult.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             // 起终点或途经点地址有岐义，通过以下接口获取建议查询信息
