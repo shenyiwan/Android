@@ -65,7 +65,8 @@
             android:layout_marginRight="2dip"
             android:layout_weight="1.0"
             android:onClick="searchButtonProcess"
-            android:text="驾车搜索" />
+            android:text="驾车"
+            android:background="@drawable/routeplanbutton_style"/>
 
         <Button
             android:id="@+id/transit"
@@ -75,7 +76,8 @@
             android:layout_marginRight="2dip"
             android:layout_weight="1.0"
             android:onClick="searchButtonProcess"
-            android:text="公交搜索" />
+            android:text="公交"
+            android:background="@drawable/routeplanbutton_style"/>
 
         <Button
             android:id="@+id/walk"
@@ -85,7 +87,9 @@
             android:layout_marginRight="2dip"
             android:layout_weight="1.0"
             android:onClick="searchButtonProcess"
-            android:text="步行搜索" />
+            android:text="步行"
+            android:background="@drawable/routeplanbutton_style"
+            />
         <Button
             android:id="@+id/bike"
             android:layout_width="fill_parent"
@@ -94,7 +98,8 @@
             android:layout_marginRight="2dip"
             android:layout_weight="1.0"
             android:onClick="searchButtonProcess"
-            android:text="骑行搜索" />
+            android:text="骑行"
+            android:background="@drawable/routeplanbutton_style"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -117,16 +122,9 @@
             android:layout_alignWithParentIfMissing="false"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dip"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:id="@+id/linearLayout">
 
-            <Button
-                android:id="@+id/customicon"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="10dip"
-                android:layout_weight="1.0"
-                android:onClick="changeRouteIcon"
-                android:text="自定义起终点图标" />
         </LinearLayout>
 
         <LinearLayout
@@ -141,17 +139,16 @@
 
             <Button
                 android:id="@+id/pre"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
-                android:layout_weight="1.0"
                 android:background="@drawable/pre_"
                 android:onClick="nodeClick" />
 
             <Button
                 android:id="@+id/next"
-                android:layout_width="fill_parent"
+                android:layout_width="60dp"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
@@ -159,6 +156,7 @@
                 android:background="@drawable/next_"
                 android:onClick="nodeClick" />
         </LinearLayout>
+
     </RelativeLayout>
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -13,6 +14,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().hide();
+        }
         setContentView(R.layout.activity_main);
 
         Button sensor = (Button) findViewById(R.id.sensor);
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         if (view.getId() == R.id.baidu) {
-            Intent intent = new Intent(MainActivity.this, TrackShowDemo.class);
+            Intent intent = new Intent(MainActivity.this, RouteActivity.class);
             startActivity(intent);
         }
         if (view.getId() == R.id.route) {

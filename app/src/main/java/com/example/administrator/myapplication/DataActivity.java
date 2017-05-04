@@ -28,6 +28,9 @@ public class DataActivity extends AppCompatActivity implements
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().hide();
+        }
         setContentView(R.layout.activity_data);
         data = (TextView) findViewById(R.id.data);
         data.setMovementMethod(new ScrollingMovementMethod());

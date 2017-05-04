@@ -4,37 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/main1"
     tools:context="com.example.administrator.myapplication.MainActivity">
 
 
-    <Button
-        android:id="@+id/sensor"
-        android:layout_width="222dp"
-        android:layout_height="87dp"
-        android:text="加速度传感器"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="0dp"
-        android:layout_marginBottom="320dp" />
+            <Button
+                android:id="@+id/baidu"
+                android:layout_width="136dp"
+                android:layout_height="88dp"
+                android:background="@drawable/route_style"
+                android:drawableLeft="@drawable/route"
+                android:drawablePadding="2sp"
+                android:text="运动轨迹"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="37dp"
+                android:layout_marginBottom="169dp" />
 
-    <Button
-        android:id="@+id/baidu"
-        android:layout_width="222dp"
-        android:layout_height="87dp"
-        android:text="运动轨迹"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="-9dp"
-        android:layout_marginBottom="199dp" />
+            <Button
+                android:id="@+id/route"
+                android:layout_width="136dp"
+                android:layout_height="88dp"
+                android:background="@drawable/routeplan_style"
+                android:drawableLeft="@drawable/routeplan"
+                android:drawablePadding="2sp"
+                android:text="路径规划"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="208dp"
+                android:layout_marginBottom="169dp" />
 
-    <Button
-        android:id="@+id/route"
-        android:layout_width="222dp"
-        android:layout_height="87dp"
-        android:text="路径规划"
+
+            <Button
+            android:id="@+id/step"
+            android:layout_width="136dp"
+            android:layout_height="88dp"
+            android:layout_marginBottom="293dp"
+            android:layout_marginLeft="200dp"
+            android:layout_marginStart="208dp"
+            android:background="@drawable/step_style"
+            android:drawableLeft="@drawable/step"
+            android:drawablePadding="2sp"
+            android:text="计步器"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+
+
+             <Button
+                 android:id="@+id/sensor"
+                 android:layout_width="136dp"
+                 android:layout_height="88dp"
+                 android:layout_marginBottom="293dp"
+                 android:layout_marginLeft="50dp"
+                 android:layout_marginStart="37dp"
+                 android:background="@drawable/sensor_style"
+                 android:drawableLeft="@drawable/acc"
+                 android:drawablePadding="2sp"
+                 android:text="加速度传感器"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="309dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/fitbit1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="-4dp"
-        android:layout_marginBottom="91dp" />
+        android:layout_marginLeft="70dp"
+        android:layout_marginBottom="407dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="49dp"
+        android:layout_height="33dp"
+        app:srcCompat="@drawable/icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="21dp"
+        android:layout_marginBottom="438dp" />
+
 
 </android.support.constraint.ConstraintLayout>

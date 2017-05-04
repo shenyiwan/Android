@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,13 +43,13 @@ public class SensorActivity extends AppCompatActivity
     private SensorManager sensorManager;
     private boolean flag = true;
     private float xValue, yValue, zValue;
-    private int j=0;
+    private int j=1;
     private int savedTime;
     private long Time;
     private String str1;
 
-    private Button start,stop,show,map;
-    private TextView etTxt1;
+    private Button start,stop,show;
+     private TextView etTxt1;
     private File file=null;
     private LineChartView lineChart1;
     private LineChartView lineChart2;
@@ -62,7 +63,9 @@ public class SensorActivity extends AppCompatActivity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().hide();
+        }
         super.onCreate(savedInstanceState);
         sensorManager = (SensorManager) getSystemService(
                 Context.SENSOR_SERVICE);
@@ -79,7 +82,6 @@ public class SensorActivity extends AppCompatActivity
         stop.setOnClickListener(this);
         Button show = (Button) findViewById(R.id.show);
         show.setOnClickListener(this);
-
     }
 
     private void initLineChart(LineChartView lineChart,List<PointValue> pointValues,int color){
@@ -123,10 +125,10 @@ public class SensorActivity extends AppCompatActivity
         lineChart.setLineChartData(data);
         lineChart.setVisibility(View.VISIBLE);
 
+
         Viewport v=new Viewport(lineChart.getMaximumViewport());
         v.left=0;
         lineChart.setCurrentViewport(v);
-
     }
 
 
@@ -140,7 +142,6 @@ public class SensorActivity extends AppCompatActivity
 
     @Override
     protected void onStop() {
-        sensorManager.unregisterListener(this);
         super.onStop();
     }
 
@@ -161,11 +162,13 @@ public class SensorActivity extends AppCompatActivity
     public void onClick(View view) {
 
         if (view.getId() == R.id.start) {
-            onResume();
+            sensorManager.registerListener(this,
+                    sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                    SensorManager.SENSOR_DELAY_NORMAL);
             flag = true;
         }
         if (view.getId() == R.id.stop) {
-            onStop();
+            sensorManager.unregisterListener(this);
             flag = false;
         }
         if (view.getId() == R.id.show) {
@@ -173,8 +176,6 @@ public class SensorActivity extends AppCompatActivity
             Intent intent = new Intent(SensorActivity.this, DataActivity.class);
             startActivity(intent);
         }
-
-
     }
 
     @Override

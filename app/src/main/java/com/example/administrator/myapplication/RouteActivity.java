@@ -1,14 +1,23 @@
 package com.example.administrator.myapplication;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.nfc.Tag;
+import android.provider.ContactsContract;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -31,7 +40,7 @@ import com.baidu.mapapi.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteActivity extends AppCompatActivity implements View.OnClickListener,SensorEventListener{
+public class RouteActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     public LocationClient locationClient=null;
@@ -49,38 +58,55 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
     private  double longitude;
     private  double latitude;
     boolean isFirstLoc=true;
+    boolean isPause=true;
     public MapView mapView=null;
     public BaiduMap baiduMap=null;
 
-    private Button back,start,stop,clear,route;
-
+    private Button start,stop,done;
+    private ImageButton clear,location;
     List<LatLng> points =new ArrayList<LatLng>();
     List<LatLng> points_tem=new ArrayList<LatLng>();
+
+//    private Sensor accelerometer; // 加速度传感器
+//    private Sensor magnetic; // 地磁场传感器
+//    private float[] accelerometerValues = new float[3];
+//    private float[] magneticFieldValues = new float[3];
+//    private TextView azimuthAngle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().hide();
+        }
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_route);
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+//        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+//        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        magnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
         initLocate();
 
-        back = (Button) findViewById(R.id.back);
-        back.setOnClickListener(this);
+
         start=(Button)findViewById(R.id.start);
         start.setOnClickListener(this);
         stop=(Button)findViewById(R.id.stop);
         stop.setOnClickListener(this);
-        route=(Button)findViewById(R.id.route);
-        route.setOnClickListener(this);
-        clear=(Button)findViewById(R.id.clear);
+        done=(Button)findViewById(R.id.done);
+        done.setOnClickListener(this);
+        clear=(ImageButton)findViewById(R.id.clear);
         clear.setOnClickListener(this);
+        location=(ImageButton)findViewById(R.id.location);
+        location.setOnClickListener(this);
+        stop.setVisibility(View.INVISIBLE);
+        done.setVisibility(View.INVISIBLE);
     }
 
 
     private void initLocate(){
         mapView=(MapView) findViewById(R.id.bmapview);
+        mapView.showZoomControls(false);
         baiduMap=mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
         locationClient=new LocationClient(getApplicationContext());
@@ -90,6 +116,7 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
         option.setOpenGps(true);
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         option.setCoorType("bd09ll");
+        option.setNeedDeviceDirect(true);
         option.setScanSpan(1000);
         option.setIsNeedAddress(true);
         locationClient.setLocOption(option);
@@ -104,24 +131,66 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
         baiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
     }
 
-
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        double x = sensorEvent.values[SensorManager.DATA_X];
-        if (Math.abs(x - lastX) > 1.0) {
-            mCurrentDirection = (int) x;
-            locData = new MyLocationData.Builder()
-                    .accuracy(mCurrentAccracy)
-                    // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(mCurrentDirection).latitude(latitude)
-                    .longitude(longitude).build();
-            baiduMap.setMyLocationData(locData);
-        }
-        lastX = x;
-    }
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-    }
+//    private void calculateOrientation() {
+//        float[] values = new float[3];
+//        float[] R = new float[9];
+//        SensorManager.getRotationMatrix(R, null, accelerometerValues,
+//                magneticFieldValues);
+//        SensorManager.getOrientation(R, values);
+//        values[0] = (float) Math.toDegrees(values[0]);
+//
+//        if (values[0] >= -5 && values[0] < 5) {
+//            azimuthAngle.setText("正北");
+//        } else if (values[0] >= 5 && values[0] < 85) {
+//            // Log.i(TAG, "东北");
+//            azimuthAngle.setText("东北");
+//        } else if (values[0] >= 85 && values[0] <= 95) {
+//            // Log.i(TAG, "正东");
+//            azimuthAngle.setText("正东");
+//        } else if (values[0] >= 95 && values[0] < 175) {
+//            // Log.i(TAG, "东南");
+//            azimuthAngle.setText("东南");
+//        } else if ((values[0] >= 175 && values[0] <= 180)
+//                || (values[0]) >= -180 && values[0] < -175) {
+//            // Log.i(TAG, "正南");
+//            azimuthAngle.setText("正南");
+//        } else if (values[0] >= -175 && values[0] < -95) {
+//            // Log.i(TAG, "西南");
+//            azimuthAngle.setText("西南");
+//        } else if (values[0] >= -95 && values[0] < -85) {
+//            // Log.i(TAG, "正西");
+//            azimuthAngle.setText("正西");
+//        } else if (values[0] >= -85 && values[0] < -5) {
+//            // Log.i(TAG, "西北");
+//            azimuthAngle.setText("西北");
+//        }
+//
+//        double x=values[0];
+//        if (Math.abs(x - lastX) > 1.0) {
+//            mCurrentDirection = (int) x;
+//            locData = new MyLocationData.Builder()
+//                    .accuracy(mCurrentAccracy)
+//                    // 此处设置开发者获取到的方向信息，顺时针0-360
+//                    .direction(mCurrentDirection).latitude(latitude)
+//                    .longitude(longitude).build();
+//            baiduMap.setMyLocationData(locData);
+//        }
+//        lastX = x;
+//    }
+//
+//    @Override
+//    public void onSensorChanged(SensorEvent sensorEvent) {
+//        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+//           accelerometerValues=sensorEvent.values;
+//        }
+//        if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+//            magneticFieldValues = sensorEvent.values;
+//        }
+//        calculateOrientation();
+//    }
+//    @Override
+//    public void onAccuracyChanged(Sensor sensor, int i) {
+//    }
 
 
     public class MyLocationListener implements BDLocationListener{
@@ -176,7 +245,7 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
             currentAddr = location.getAddrStr();
             locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
-                    .direction(mCurrentDirection).latitude(location.getLatitude())
+                    .direction(location.getDirection()).latitude(location.getLatitude())
                     .longitude(location.getLongitude()).build();
             baiduMap.setMyLocationData(locData);
 
@@ -184,7 +253,7 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
             points.add(point);
 
             if (isFirstLoc) {
-                Toast.makeText(RouteActivity.this, "当前位置" + currentAddr + "经度" + longitude + "纬度" + latitude, Toast.LENGTH_SHORT).show();
+//              Toast.makeText(RouteActivity.this, "当前位置" + currentAddr + "经度" + longitude + "纬度" + latitude, Toast.LENGTH_SHORT).show();
                 isFirstLoc = false;
                 LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
@@ -250,10 +319,11 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume()
     {
+//        mSensorManager.registerListener(this, accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+//        mSensorManager.registerListener(this, magnetic, SensorManager.SENSOR_DELAY_NORMAL);
         mapView.onResume();
         super.onResume();
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-                SensorManager.SENSOR_DELAY_NORMAL);
+
     }
 
 
@@ -261,7 +331,7 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
     protected void onStop()
     {
         locationClient.stop();
-        mSensorManager.unregisterListener(this);
+//        mSensorManager.unregisterListener(this);
         super.onStop();
     }
 
@@ -278,33 +348,49 @@ public class RouteActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
 
-        if(view.getId()==R.id.back) {
-            Toast.makeText(RouteActivity.this, "return", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(RouteActivity.this, MainActivity.class);
-            startActivity(intent);
-        }
-
         if(view.getId()==R.id.start) {
             if(!locationClient.isStarted()){
                 locationClient.start();
             }
             points.clear();
+            start.setVisibility(View.INVISIBLE);
+            stop.setVisibility(View.VISIBLE);
+            done.setVisibility(View.VISIBLE);
+        }
+
+        if(view.getId()==R.id.done){
+            drawEnd(points);
+            start.setVisibility(View.VISIBLE);
+            stop.setVisibility(View.INVISIBLE);
+            done.setVisibility(View.INVISIBLE);
         }
 
         if(view.getId()==R.id.stop){
-            drawEnd(points);
-            if(locationClient.isStarted()){
-                locationClient.stop();
+            if(isPause) {
+                stop.setText("继续");
+                locationClient.unRegisterLocationListener(myListenner);
+                isPause=false;
+                Drawable rewardIcon= ResourcesCompat.getDrawable(getResources(),R.drawable.jixu,null);
+                rewardIcon.setBounds(0,0,rewardIcon.getMinimumWidth(),rewardIcon.getMinimumHeight());
+                stop.setCompoundDrawables(rewardIcon,null,null,null);
+            }else {
+                stop.setText("暂停");
+                locationClient.registerLocationListener(myListenner);
+                isPause=true;
+                Drawable rewardIcon= ResourcesCompat.getDrawable(getResources(),R.drawable.zanting,null);
+                rewardIcon.setBounds(0,0,rewardIcon.getMinimumWidth(),rewardIcon.getMinimumHeight());
+                stop.setCompoundDrawables(rewardIcon,null,null,null);
             }
-        }
-
-        if(view.getId()==R.id.route){
-            Intent intent = new Intent(RouteActivity.this, RoutePlanActivity.class);
-            startActivity(intent);
         }
 
         if (view.getId() == R.id.clear) {
             baiduMap.clear();
+        }
+
+        if(view.getId()==R.id.location){
+            Toast toast=Toast.makeText(RouteActivity.this,  "当前位置" + currentAddr + "经度" + longitude + "纬度" + latitude, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.TOP,0,550);
+            toast.show();
         }
     }
 }

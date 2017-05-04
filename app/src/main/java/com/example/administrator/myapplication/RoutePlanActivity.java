@@ -4,6 +4,7 @@ package com.example.administrator.myapplication;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -88,6 +89,7 @@ public class RoutePlanActivity extends Activity
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_routeplan);
         CharSequence titleLable = "路线规划功能";
@@ -160,6 +162,7 @@ public class RoutePlanActivity extends Activity
         if (v.getId() == R.id.drive) {
             mSearch.drivingSearch((new DrivingRoutePlanOption())
                     .from(stNode).to(enNode));
+
         } else if (v.getId() == R.id.transit) {
             mSearch.transitSearch((new TransitRoutePlanOption())
                     .from(stNode).city("北京").to(enNode));
