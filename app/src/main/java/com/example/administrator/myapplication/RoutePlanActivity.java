@@ -2,6 +2,7 @@ package com.example.administrator.myapplication;
 
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -62,6 +63,7 @@ public class RoutePlanActivity extends Activity
     // 浏览路线节点相关
     Button mBtnPre = null; // 上一个节点
     Button mBtnNext = null; // 下一个节点
+    Button bike,bus,walk,drive;
     int nodeIndex = -1; // 节点索引,供浏览节点时使用
     RouteLine route = null;
     OverlayManager routeOverlay = null;
@@ -70,6 +72,7 @@ public class RoutePlanActivity extends Activity
 
     // 地图相关，使用继承MapView的MyRouteMapView目的是重写touch事件实现泡泡处理
     // 如果不处理touch事件，则无需继承，直接使用MapView即可
+    View view;
     MapView mMapView = null;    // 地图View
     BaiduMap mBaidumap = null;
     // 搜索相关
@@ -104,6 +107,10 @@ public class RoutePlanActivity extends Activity
 
         editEn = (EditText) findViewById(R.id.end);
 
+        bike=(Button) findViewById(R.id.bike);
+        drive=(Button)findViewById(R.id.drive);
+        walk=(Button)findViewById(R.id.walk);
+        bus=(Button)findViewById(R.id.transit);
         initlocal();
 
         mBtnPre = (Button) findViewById(R.id.pre);
@@ -162,16 +169,31 @@ public class RoutePlanActivity extends Activity
         if (v.getId() == R.id.drive) {
             mSearch.drivingSearch((new DrivingRoutePlanOption())
                     .from(stNode).to(enNode));
-
+            drive.setBackgroundResource(R.drawable.routeplanbutton_style);
+            walk.setBackgroundColor(Color.alpha(0));
+            bike.setBackgroundColor(Color.alpha(0));
+            bus.setBackgroundColor(Color.alpha(0));
         } else if (v.getId() == R.id.transit) {
             mSearch.transitSearch((new TransitRoutePlanOption())
                     .from(stNode).city("北京").to(enNode));
+            bus.setBackgroundResource(R.drawable.routeplanbutton_style);
+            walk.setBackgroundColor(Color.alpha(0));
+            drive.setBackgroundColor(Color.alpha(0));
+            bike.setBackgroundColor(Color.alpha(0));
         } else if (v.getId() == R.id.walk) {
             mSearch.walkingSearch((new WalkingRoutePlanOption())
                     .from(stNode).to(enNode));
+            walk.setBackgroundResource(R.drawable.routeplanbutton_style);
+            bike.setBackgroundColor(Color.alpha(0));
+            drive.setBackgroundColor(Color.alpha(0));
+            bus.setBackgroundColor(Color.alpha(0));
         } else if (v.getId() == R.id.bike) {
             mSearch.bikingSearch((new BikingRoutePlanOption())
                     .from(stNode).to(enNode));
+            bike.setBackgroundResource(R.drawable.routeplanbutton_style);
+            walk.setBackgroundColor(Color.alpha(0));
+            drive.setBackgroundColor(Color.alpha(0));
+            bus.setBackgroundColor(Color.alpha(0));
         }
     }
 
